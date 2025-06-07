@@ -99,7 +99,8 @@ impl App {
                     _ => {}
                 },
                 CurrentScreen::SearchResults => match key.code {
-                    KeyCode::Char('q') | KeyCode::Esc => self.exit(),
+                    KeyCode::Char('q') => self.exit(),
+                    KeyCode::Esc => self.current_screen = CurrentScreen::Search,
                     KeyCode::Char('?') => self.help(),
                     KeyCode::Left | KeyCode::Char('h') | KeyCode::Char('a') => {
                         let last = self.current_page;
