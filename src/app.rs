@@ -149,6 +149,12 @@ impl App {
                             self.selected.insert(url);
                         }
                     }
+                    KeyCode::Enter => {
+                        // TODO: Clone the repos and appropriately print the output
+                        for url in self.selected.iter() {
+                            println!("Cloning {}", url);
+                        }
+                    }
                     _ => {}
                 },
                 CurrentScreen::Help => match key.code {
