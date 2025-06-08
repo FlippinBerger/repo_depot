@@ -150,10 +150,8 @@ impl App {
                         }
                     }
                     KeyCode::Enter => {
-                        // TODO: Clone the repos and appropriately print the output
-                        for url in self.selected.iter() {
-                            println!("Cloning {}", url);
-                        }
+                        let repos = self.selected.iter().map(|url| url.clone()).collect();
+                        let _ = crate::fs::clone_repos(repos);
                     }
                     _ => {}
                 },

@@ -15,3 +15,30 @@ pub fn set_up_dir() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 }
+
+// git clone <git_url> <path>/<repo_name>
+pub fn clone_repos(repos: Vec<String>) -> Result<(), Box<dyn std::error::Error>> {
+    for repo in repos {
+        let repo_name = repo.split("/").last().unwrap();
+        let path = dirs::home_dir()
+            .unwrap()
+            .join(".repo-depot")
+            .join(repo_name);
+        let output = std::process::Command::new("git")
+            .arg("clone")
+            .arg(&repo)
+            .arg(path)
+            .output()?;
+
+        if !output.status.success() {
+            eprintln!("Failed to clone repo: {}", repo_name);
+            eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+            std::process::exit(1);
+        } else {
+            println!("Cloned repo: {}", repo_name);
+            println!("Output: {}", String::from_utf8_lossy(&output.stdout));
+        }
+    }
+
+    Ok(())
+}
